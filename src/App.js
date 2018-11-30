@@ -12,7 +12,7 @@ import RoomList from './components/RoomList.js';
     messagingSenderId: "762771235835"
   };
   firebase.initializeApp(config);
- 
+
 class App extends Component {
 
   render() {
