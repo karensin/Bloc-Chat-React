@@ -64,6 +64,7 @@ class messageList extends Component{
 
 
     componentDidMount() {
+      this.setState({userName: this.props.user})
       this.messagesRef.on('child_added', snapshot => {
          const message = snapshot.val();
          message.key = snapshot.key;
@@ -78,7 +79,7 @@ render() {
     this.state.messages.map((message)=>{
       if (message.roomId===activeRoom){
         return <li key={message.key}>:{message.userName}:{message.content}
-        :{this.convertMillisToTime(message.sentAt)}</li>
+        {this.convertMillisToTime(message.sentAt)}</li>
           }
         return null;
     })
