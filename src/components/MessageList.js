@@ -17,15 +17,8 @@ class messageList extends Component{
   this.convertMillisToTime=this.convertMillisToTime.bind(this);
  };
 
-  componentDidMount() {
-    this.messagesRef.on('child_added', snapshot => {
-       const message = snapshot.val();
-       message.key = snapshot.key;
-       this.setState({ messages: this.state.messages.concat( message ) })
-     });
 
 
- }
   createMessage(e){
     e.preventDefault();
     this.messagesRef.push({
@@ -48,8 +41,8 @@ class messageList extends Component{
 
   messageContent(e){
     e.preventDefault();
-    this.setState({
-      username:'',
+     this.setState({
+      username:this.props.user,
       content:e.target.value,
       sentAt:firebase.database.ServerValue.TIMESTAMP,
       roomId:this.props.activeRoom
@@ -70,14 +63,23 @@ class messageList extends Component{
   }
 
 
+    componentDidMount() {
+      this.setState({userName: this.props.user})
+      this.messagesRef.on('child_added', snapshot => {
+         const message = snapshot.val();
+         message.key = snapshot.key;
+         this.setState({ messages: this.state.messages.concat( message ) })
+       });
+}
 
 render() {
   const activeRoom = this.props.activeRoom
+
   const currentMessages= (
     this.state.messages.map((message)=>{
       if (message.roomId===activeRoom){
-        return <ol key={message.key}> {message.content}
-         Sent at {this.convertMillisToTime(message.sentAt)}</ol>
+        return <li key={message.key}>:{message.userName}:{message.content}
+        {this.convertMillisToTime(message.sentAt)}</li>
           }
         return null;
     })
@@ -85,7 +87,7 @@ render() {
   const messageBox=(
     <form onSubmit ={this.createMessage}>
       <h2> Message Window </h2>
-      <textarea type="text" onChange={this.messageContent}/>
+      <input type="text" value={this.state.content} onChange={this.messageContent}/>
       <input type= 'Submit' placeholder="Enter a message..." Value="Submit"/>
     </form>
 
