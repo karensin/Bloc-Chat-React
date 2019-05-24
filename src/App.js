@@ -4,6 +4,7 @@ import './App.css';
 import RoomList from './components/RoomList.js';
 import MessageList from './components/MessageList.js';
 import User from './components/User.js';
+import logo from './logo.svg';
 
   var config = {
     apiKey: "AIzaSyDxQe-GbXvFlfi8KqMe3jCMxXbi2y14vso",
@@ -15,60 +16,62 @@ import User from './components/User.js';
   };
   firebase.initializeApp(config);
 
-class App extends Component {
-  constructor(props){
-    super(props);
-    this.state={
-      activeRoom:'',
-      user:null ,
+  class App extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        activeRoom: "",
+        user: null
+      };
+      this.setActiveRoom = this.setActiveRoom.bind(this);
+      this.setUser = this.setUser.bind(this);
+    }
 
-    };
-    this.setActiveRoom=this.setActiveRoom.bind(this);
-    this.setUser=this.setUser.bind(this);
-
-}
-    setActiveRoom(room){
-      this.setState({
-        activeRoom: room
+    setActiveRoom(room) {
+      this.setState({ activeRoom: room
       });
     }
-    setUser(user){
-      this.setState({
-        user: user
-         });
+
+    setUser(user) {
+      this.setState({ user: user
+       });
     }
-  render() {
-    const listMessages = this.state.activeRoom;
-    const activeUser = this.state.user === null ? "Guest" : this.state.user.displayName;
 
-    return (
+      render() {
+        let listMessages = this.state.activeRoom;
+        let activeUser  = this.state.user === null ? "Guest" : this.state.user.displayName;
 
-     <div className="App">
+        return (
+          <div className="App">
 
-      <h1>Chatty</h1>
-      <div class='topnav'>
-         <User
-          firebase={firebase}
-          setUser={this.setUser}
-          userHere= {activeUser}
-          />
-      </div>
-      <aside>
-          <RoomList
-            firebase={firebase}
-            setActiveRoom={this.setActiveRoom}/>
-      </aside>
-      <body>
-        {listMessages ?
-        <MessageList firebase={firebase}
-        activeRoom={this.state.activeRoom.key}
-        user={activeUser}/>
-        :null
+         <header className="App-header">
+           <img src={logo} className="App-logo" alt="logo" />
+           <h1 className="App-title">Welcome to Chatty</h1>
+         </header>
+         <div class='topnav'>
+            <User
+              firebase={firebase}
+              setUser={this.setUser}
+              userHere={activeUser}
+              />
+              </div>
+            <h2>{this.state.activeRoom.name || "Select or Create your own chat room"}</h2>
+
+            <RoomList
+              firebase={firebase}
+             setActiveRoom={this.setActiveRoom}
+             />
+
+             <div className="messageList" >
+            { listMessages ?
+              <MessageList firebase={firebase}
+              activeRoom={this.state.activeRoom.key}
+              user ={activeUser} />
+            : null
+            }
+            </div>
+          </div>
+        );
       }
-         </body>
-         </div>
-    );
-  }
-}
-
-export default App;
+    }
+  export default App;

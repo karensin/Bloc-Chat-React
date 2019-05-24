@@ -1,0 +1,21 @@
+.login{
+    float:right;
+    color: black;
+    font-size: 12px;
+ }
+
+
+.signIn {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+
+}
+.signIn:hover {
+  background-color:blue ; /* Green */
+  color: white;
+}
+
+.signOut:hover {
+  background-color: red; /* Green */
+  color: white;
+}

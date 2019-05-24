@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import* as firebase from 'firebase';
+import './MessageList.css';
 
 class messageList extends Component{
   constructor(props) {
@@ -57,7 +58,7 @@ class messageList extends Component{
     var thetoday = time.getDate();
     var realTime = time.toLocaleTimeString();
 
-    return  themonth + "/" + thetoday+ "/" + theyear + "("+ realTime+")"
+    return  " " + realTime
 
 
   }
@@ -78,26 +79,28 @@ render() {
   const currentMessages= (
     this.state.messages.map((message)=>{
       if (message.roomId===activeRoom){
-        return <li key={message.key}>:{message.userName}:{message.content}
+        return <li className="messages"key={message.key}>:  {message.userName}   {message.content}
         {this.convertMillisToTime(message.sentAt)}</li>
           }
         return null;
     })
   );
   const messageBox=(
-    <form onSubmit ={this.createMessage}>
-      <h2> Message Window </h2>
-      <input type="text" value={this.state.content} onChange={this.messageContent}/>
-      <input type= 'Submit' placeholder="Enter a message..." Value="Submit"/>
+    <form className="messages" onSubmit ={this.createMessage}>
+      <input className= "textbox"  type="text" value={this.state.content} onChange={this.messageContent}/>
+
+      <input className= "submitbox" type= 'Submit' placeholder="Enter a message..." value="Send"/>
     </form>
 
 )
 
   return (
-    <div className="message-list">
-    {messageBox}
-    {currentMessages}
-      </div>
+    < div>
+          <div ClassName="currentMessages">{currentMessages}</div>
+
+        <div ClassName="messageBox">  {messageBox}</div>
+
+      </div >
 
     );
   }
