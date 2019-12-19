@@ -1,0 +1,36 @@
+
+
+.projectBox {
+  background-color: pink;
+  background-size: cover;
+  width: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.projectName {
+  color: white;
+  border: white 3px solid ;
+  text-align: center; 
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 20pt;
+  font-family: "Garamond";  
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); 
+  top: 35%;
+  
+ }
+
+.wrapper{
+        transition: 1s; 
+      position: relative;
+}
+
+
+
+.wrapper :hover{
+  transition: 1s; 
+  transform: rotate(20deg);
+}
